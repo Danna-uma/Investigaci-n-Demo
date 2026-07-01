@@ -1,86 +1,55 @@
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-let filter = "all";
+// ============================================================
+// pwa.js — registro del Service Worker + prompt de instalación
+// + indicador de estado de conexión
+// ============================================================
 
-const list = document.getElementById("taskList");
-const count = document.getElementById("count");
-
-function save() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function setFilter(f) {
-  filter = f;
-  render();
-}
-
-function addTask() {
-  const input = document.getElementById("taskInput");
-  const priority = document.getElementById("priority");
-
-  if (!input.value.trim()) return;
-
-  tasks.push({
-    text: input.value,
-    done: false,
-    priority: priority.value,
-    date: new Date().toLocaleString()
-  });
-
-  input.value = "";
-
-  save();
-  render();
-}
-
-function toggleTask(i) {
-  tasks[i].done = !tasks[i].done;
-  save();
-  render();
-}
-
-function deleteTask(i) {
-  tasks.splice(i, 1);
-  save();
-  render();
-}
-
-function render() {
-  list.innerHTML = "";
-
-  let filtered = tasks.filter(t => {
-    if (filter === "active") return !t.done;
-    if (filter === "done") return t.done;
-    return true;
-  });
-
-  filtered.forEach((t, i) => {
-    const div = document.createElement("div");
-
-    div.className = `task ${t.done ? "done" : ""} priority-${t.priority}`;
-
-    div.innerHTML = `
-      <div onclick="toggleTask(${i})">
-        <strong>${t.text}</strong><br>
-        <small>${t.date}</small>
-      </div>
-
-      <button onclick="deleteTask(${i})">❌</button>
-    `;
-
-    list.appendChild(div);
-  });
-
-  updateCount();
-}
-
-function updateCount() {
-  const active = tasks.filter(t => !t.done).length;
-  count.textContent = `Activas: ${active}`;
-}
-
-render();
-
-/* PWA */
+// --- Registrar el Service Worker ---
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("./service-worker.js")
+      .then((reg) => console.log("[PWA] Service Worker registrado:", reg.scope))
+      .catch((err) => console.error("[PWA] Error registrando SW:", err));
+  });
 }
+
+// --- Prompt de instalación (evento beforeinstallprompt) ---
+let deferredPrompt;
+const installBanner = document.getElementById("install-banner");
+const installBtn = document.getElementById("install-btn");
+const dismissBtn = document.getElementById("dismiss-install");
+
+window.addEventListener("beforeinstallprompt", (event) => {
+  event.preventDefault();
+  deferredPrompt = event;
+  installBanner.hidden = false;
+});
+
+installBtn?.addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  console.log("[PWA] Resultado de instalación:", outcome);
+  deferredPrompt = null;
+  installBanner.hidden = true;
+});
+
+dismissBtn?.addEventListener("click", () => {
+  installBanner.hidden = true;
+});
+
+window.addEventListener("appinstalled", () => {
+  console.log("[PWA] App instalada");
+  installBanner.hidden = true;
+});
+
+// --- Indicador de conexión ---
+const offlineBanner = document.getElementById("offline-banner");
+
+function updateConnectionStatus() {
+  offlineBanner.hidden = navigator.onLine;
+}
+
+window.addEventListener("online", updateConnectionStatus);
+window.addEventListener("offline", updateConnectionStatus);
+updateConnectionStatus();
