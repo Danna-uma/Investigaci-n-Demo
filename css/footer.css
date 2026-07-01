@@ -1,0 +1,9 @@
+.footer{
+    text-align:center;
+
+    padding:2rem;
+
+    color:var(--muted);
+
+    border-top:1px solid var(--border);
+}

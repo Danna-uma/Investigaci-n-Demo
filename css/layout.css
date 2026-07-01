@@ -1,0 +1,182 @@
+.main{
+    max-width:1100px;
+    margin:auto;
+    padding:2rem 5%;
+}
+
+.task-creator{
+    margin-bottom:2.5rem;
+}
+
+.creator-card{
+    background:var(--white);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+
+    padding:2rem;
+}
+
+.creator-card h2{
+    margin-bottom:.5rem;
+}
+
+.subtitle{
+    color:var(--muted);
+    margin-bottom:1.5rem;
+}
+
+.creator-form{
+    display:grid;
+    gap:1rem;
+}
+
+.input,
+.select{
+    width:100%;
+
+    padding:.9rem 1rem;
+
+    border:1px solid var(--border);
+    border-radius:10px;
+
+    outline:none;
+}
+
+.input:focus,
+.select:focus{
+    border-color:var(--primary);
+}
+
+.btn-primary{
+    border:none;
+
+    background:var(--primary);
+    color:white;
+
+    padding:1rem;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.2s;
+}
+
+.btn-primary:hover{
+    opacity:.9;
+}
+
+.filters{
+    margin-bottom:2rem;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:1rem;
+    flex-wrap:wrap;
+}
+
+.filter-group{
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+}
+
+.filter{
+    border:none;
+
+    background:white;
+
+    padding:.8rem 1rem;
+
+    border-radius:10px;
+
+    box-shadow:var(--shadow);
+}
+
+.filter.active{
+    background:var(--primary);
+    color:white;
+}
+
+.btn-danger{
+    border:none;
+
+    background:var(--danger);
+    color:white;
+
+    padding:.8rem 1rem;
+
+    border-radius:10px;
+}
+
+.tasks{
+    margin-bottom:3rem;
+}
+
+.task-list{
+    display:flex;
+    flex-direction:column;
+    gap:1.2rem;
+}
+
+.task-card{
+    background:white;
+
+    border-radius:var(--radius);
+
+    padding:1.2rem;
+
+    box-shadow:var(--shadow);
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    transition:.2s;
+}
+
+.task-card:hover{
+    transform:translateY(-2px);
+}
+
+.task-card.completed{
+    opacity:.75;
+}
+
+.task-card.completed span{
+    text-decoration:line-through;
+}
+
+.empty{
+    text-align:center;
+
+    padding:3rem 1rem;
+
+    color:var(--muted);
+}
+
+.empty-icon{
+    display:block;
+    font-size:3rem;
+    margin-bottom:1rem;
+}
+
+input[type="date"] {
+    background-color: var(--dark-light);
+    color: var(--light);
+    border: 1px solid var(--primary);
+    padding: 0.8rem;
+    border-radius: 8px;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+}
+
+input[type="date"] {
+    color-scheme: dark;
+}
