@@ -38,10 +38,12 @@ http://localhost:3000
 
 ## Estructura
 - index.html → interfaz
-- app.js → lógica
+- pwa.js → lógica
+- task-manager.js → lógica
 - service-worker.js → offline cache
 - manifest.json → configuración instalable
 - style.css → estilos
+- favicon.ico -> ícono
 
 ## Concepto clave
 Una PWA permite que una web funcione como una app nativa usando caching, service workers y manifest.
