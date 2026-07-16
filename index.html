@@ -1,358 +1,273 @@
 <!DOCTYPE html>
-
 <html lang="es-CR">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Task Manager desarrollado por Danna Villegas. Proyecto de portafolio con HTML, CSS y JavaScript.">
-    <meta name="author" content="Danna Villegas">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Task Manager desarrollado por Danna Villegas. Aplicación web progresiva para gestionar tareas.">
+        <meta name="author" content="Danna Villegas">
+        <meta name="theme-color"content="#1b1b1b">
 
-    <title>Task Manager | Danna Villegas</title>
+        <title>Task Manager | Danna Villegas</title>
 
-    <!-- PWA: Web App Manifest -->
-    <link rel="manifest" href="manifest.json">
+        <!-- PWA: Web App Manifest -->
+        <link rel="manifest" href="Json/manifest.json">
 
-    <!-- PWA: color de la barra de navegador / splash screen -->
-    <meta name="theme-color" content="#1b1b1b">
+        <!-- PWA: configuración para dispositivos Apple -->
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="apple-mobile-web-app-title"content="Task Manager">
 
-    <!-- PWA: soporte iOS (Safari no lee el manifest para todo) -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Task Manager">
-    <link rel="apple-touch-icon" href="icons/icon-192.png">
+        <link rel="apple-touch-icon" href="img/icon-192.png">
+        <link rel="icon" href="favicon.ico" sizes="any">
 
-    <!-- Ícono del sitio -->
-    <link rel="icon" type="image/png" href="icons/icon-192.png">
+        <!-- Íconos del sitio -->
+        <link rel="icon" type="image/png" sizes="192x192" href="img/icon-192.png">
+        <link rel="shortcut icon" type="image/png" href="img/icon-192.png">
 
-    <link rel="stylesheet" href="css/style.css">
-
-
+        <!-- Estilos -->
+        <link rel="stylesheet" href="css/style.css">
     </head>
 
     <body>
+
         <!-- HEADER -->
         <header class="header">
-
             <div class="header-inner">
-
                 <div class="brand">
-
-                    <span class="brand-icon">
+                    <span class="brand-icon" aria-hidden="true">
                         ✓
                     </span>
 
                     <h1 class="brand-title">
                         Task Manager
                     </h1>
-
                 </div>
 
                 <div class="header-actions">
-
-                    <span
-                        class="task-counter"
-                        id="pending-counter">
-
+                    <span class="task-counter" id="pending-counter" aria-live="polite">
                         0 tareas pendientes
-
                     </span>
 
-                    <button
-                        class="icon-btn"
-                        id="theme-btn"
-                        aria-label="Cambiar tema">
-
+                    <button type="button" class="icon-btn" id="theme-btn" aria-label="Cambiar tema" title="Cambiar tema">
                         ⚫
-
                     </button>
 
-                    <button
-                        class="icon-btn"
-                        id="font-decrease"
-                        aria-label="Reducir texto">
-
+                    <button type="button" class="icon-btn" id="font-decrease" aria-label="Reducir tamaño del texto" title="Reducir tamaño del texto">
                         A-
-
                     </button>
 
-                    <button
-                        class="icon-btn"
-                        id="font-increase"
-                        aria-label="Aumentar texto">
+                    <button type="button" class="icon-btn" id="font-reset" aria-label="Restablecer tamaño del texto" title="Restablecer tamaño del texto">
+                        A
+                    </button>
 
+                    <button type="button" class="icon-btn" id="font-increase" aria-label="Aumentar tamaño del texto" title="Aumentar tamaño del texto">
                         A+
-
                     </button>
-
                 </div>
-
             </div>
 
         </header>
-
         <!-- BANNER DE INSTALACIÓN PWA -->
-        <div class="install-banner" id="install-banner" hidden>
-            <p>Instala Task Manager en tu dispositivo</p>
-            <button class="btn-primary" id="install-btn">Instalar</button>
-            <button class="icon-btn" id="dismiss-install" aria-label="Cerrar">✕</button>
+        <div class="install-banner" id="install-banner" role="status" aria-live="polite" hidden>
+
+            <p>📱 Instala <strong>Task Manager</strong> en tu dispositivo</p>
+
+            <button type="button" class="btn-primary" id="install-btn">
+                Instalar
+            </button>
+
+            <button type="button"  class="icon-btn" id="dismiss-install" aria-label="Cerrar mensaje de instalación">
+                ✕
+            </button>
         </div>
 
         <!-- INDICADOR DE CONEXIÓN -->
-        <div class="offline-banner" id="offline-banner" hidden>
+        <div class="offline-banner"  id="offline-banner" role="status" aria-live="assertive" hidden>
             🔴 Sin conexión — tus tareas se guardan localmente
         </div>
 
-        <!-- MAIN -->
-
+        <!-- CONTENIDO PRINCIPAL -->
         <main class="main">
-
             <!-- CREAR TAREA -->
-
-            <section class="task-creator">
+            <section
+                class="task-creator" aria-labelledby="creator-title">
 
                 <div class="creator-card">
-
-                    <h2>
+                    <h2 id="creator-title">
                         Crear nueva tarea
                     </h2>
-
-                    <p class="subtitle">
-                        Organiza tu día de forma simple y eficiente
-                    </p>
+                    <p class="subtitle">Organiza tu día de forma simple y eficiente</p>
 
                     <div class="creator-form">
+                        <label class="sr-only" for="task-input">
+                            Descripción de la tarea
+                        </label>
 
-                        <input
-                            type="text"
-                            id="task-input"
-                            class="input"
-                            placeholder="Escribe tu tarea..."
-                            maxlength="120">
+                        <input type="text"  id="task-input"  class="input" placeholder="Escribe tu tarea..." maxlength="120" autocomplete="off">
 
-                        <select
-                            id="priority-select"
-                            class="select">
+                        <label class="sr-only" for="priority-select">
+                            Prioridad
+                        </label>
+
+                        <select id="priority-select" class="select">
 
                             <option value="alta">
                                 Alta prioridad
                             </option>
 
-                            <option value="media" selected>
+                            <option  value="media" selected>
                                 Prioridad media
                             </option>
 
                             <option value="baja">
                                 Baja prioridad
                             </option>
-
                         </select>
 
-                        <label for="due-date">Fecha de vencimiento</label>
-                        <input type="date" id="due-date">
+                        <label for="due-date">
+                            Fecha de vencimiento
+                        </label>
 
-                        <button
-                            class="btn-primary"
-                            id="add-btn">
+                        <input type="date" id="due-date" class="input">
 
+                        <button type="button" class="btn-primary" id="add-btn">
                             + Agregar tarea
-
                         </button>
-
                     </div>
-
                 </div>
 
             </section>
-
             <!-- ESTADÍSTICAS -->
+            <section class="stats" aria-label="Estadísticas de las tareas">
 
-            <section class="stats">
+                <div class="stat" tabindex="0">
 
-                <div class="stat">
+                    <h3 id="stat-total"> 0</h3>
 
-                    <h3 id="stat-total">
-                        0
-                    </h3>
-
-                    <p>
-                        Total
-                    </p>
+                    <p>Total</p>
 
                 </div>
+                <div class="stat" tabindex="0">
 
-                <div class="stat">
+                    <h3 id="stat-pending">0</h3>
 
-                    <h3 id="stat-pending">
-                        0
-                    </h3>
-
-                    <p>
-                        Pendientes
-                    </p>
+                    <p> Pendientes</p>
 
                 </div>
+                <div class="stat" tabindex="0">
 
-                <div class="stat">
+                    <h3 id="stat-done">0 </h3>
 
-                    <h3 id="stat-done">
-                        0
-                    </h3>
-
-                    <p>
-                        Completadas
-                    </p>
-
+                    <p> Completadas</p>
                 </div>
 
             </section>
-
             <!-- FILTROS -->
-
-            <section class="filters">
+            <section class="filters" aria-label="Filtros de tareas">
 
                 <div class="filter-group">
 
-                    <button
-                        class="filter active"
-                        id="filter-all">
-
+                    <button type="button" class="filter active" id="filter-all" aria-pressed="true">
                         Todas
-
                     </button>
 
-                    <button
-                        class="filter"
-                        id="filter-pending">
-
+                    <button type="button" class="filter" id="filter-pending" aria-pressed="false">
                         Pendientes
-
                     </button>
 
-                    <button
-                        class="filter"
-                        id="filter-done">
-
+                    <button type="button" class="filter" id="filter-done" aria-pressed="false">
                         Completadas
-
                     </button>
 
                 </div>
-
-                <button
-                    class="btn-danger"
-                    id="clear-btn">
-
+                <button type="button" class="btn-danger" id="clear-btn">
                     Limpiar completadas
-
                 </button>
 
             </section>
+            <!-- LISTA DE TAREAS -->
+            <section class="tasks" aria-label="Lista de tareas">
 
-            <!-- LISTA -->
+                <ul id="task-list" class="task-list" aria-live="polite"></ul>
 
-            <section class="tasks">
+                <div class="empty"  id="empty-state">
 
-                <ul
-                    id="task-list"
-                    class="task-list">
-                </ul>
-
-                <div
-                    class="empty"
-                    id="empty-state">
-
-                    <span class="empty-icon">
+                    <span class="empty-icon" aria-hidden="true">
                         📋
                     </span>
 
-                    <h3>
-                        No hay tareas
-                    </h3>
+                    <h3> No hay tareas</h3>
 
-                    <p>
-                        Agrega tu primera tarea para comenzar
-                    </p>
-
+                    <p>Agrega tu primera tarea para comenzar</p>
                 </div>
 
             </section>
-
         </main>
+        <!-- MODAL PARA EDITAR -->
 
-        <!-- MODAL -->
+        <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
 
-        <div
-            class="modal-overlay"
-            id="modal-overlay">
+            <div class="modal"  role="dialog" aria-modal="true" aria-labelledby="modal-title">
 
-            <div class="modal">
+                <h3 id="modal-title"> Editar tarea</h3>
 
-                <h3>
-                    Editar tarea
-                </h3>
+                <label class="sr-only" for="edit-input">
+                    Descripción de la tarea
+                </label>
 
-                <input
-                    type="text"
-                    id="edit-input"
-                    class="input">
+                <input type="text" id="edit-input" class="input" maxlength="120">
 
-                <select
-                    id="edit-priority"
-                    class="select">
+                <label class="sr-only"  for="edit-priority">
+                    Prioridad de la tarea
+                </label>
+
+                <select  id="edit-priority" class="select">
 
                     <option value="alta">
                         Alta
                     </option>
+
                     <option value="media">
                         Media
                     </option>
+
                     <option value="baja">
                         Baja
                     </option>
 
                 </select>
 
-                <input
-                    type="date"
-                    id="edit-date"
-                    class="input">
+                <label for="edit-date">
+                    Fecha de vencimiento
+                </label>
+
+                <input  type="date" id="edit-date" class="input">
 
                 <div class="modal-actions">
 
-                    <button
-                        class="btn-primary"
-                        id="save-btn">
-
+                    <button  type="button" class="btn-primary"  id="save-btn">
                         Guardar
                     </button>
 
-                    <button
-                        class="btn-secondary"
-                        id="cancel-btn">
+                    <button type="button" class="btn-secondary" id="cancel-btn">
                         Cancelar
                     </button>
 
                 </div>
-
             </div>
-
         </div>
 
         <!-- FOOTER -->
         <footer class="footer">
-
-            <p>
-            Desarrollado por <strong>Danna Villegas</strong>· 2026
-            </p>
+            <p>Desarrollado por <strong>Danna Villegas</strong>· 2026</p>
 
         </footer>
 
-        <script src="js/script.js"></script>
+        <!-- JavaScript principal -->
+        <script src="js/task-manager.js"></script>
+        <script src="js/pwa.js"></script>       
 
-        <!-- PWA: registro del Service Worker + lógica de instalación -->
-        <script src="js/pwa.js"></script>
+    </body>
 
-</body>
-
-</html>
+    </html>

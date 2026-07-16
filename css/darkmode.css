@@ -1,40 +1,141 @@
-body.dark{
+/* ==========================================================
+   DARK MODE
+========================================================== */
+
+body{
+    transition:
+        background-color .3s ease,
+        color .3s ease;
+}
+
+body.dark-mode{
     background:#111827;
-    color:#f3f4f6;
+    color:#f9fafb;
 }
 
-body.dark .header,
-body.dark .creator-card,
-body.dark .stat,
-body.dark .task-card,
-body.dark .modal,
-body.dark .filter,
-body.dark .input,
-body.dark .select{
+/* Header */
+
+body.dark-mode .header{
     background:#1f2937;
-    color:white;
-    border-color:#374151;
+    color:#fff;
 }
 
-body.dark .footer{
-    border-color:#374151;
+/* Tarjetas principales */
+
+body.dark-mode .creator-card,
+body.dark-mode .stat,
+body.dark-mode .modal,
+body.dark-mode .filters{
+    background:#1f2937;
+    color:#fff;
+    border:1px solid #374151;
 }
 
-body.dark .subtitle,
-body.dark .task-counter,
-body.dark .empty,
-body.dark .footer,
-body.dark .stat p{
+/* Inputs */
+
+body.dark-mode input,
+body.dark-mode select{
+    background:#111827;
+    color:#fff;
+    border:1px solid #4b5563;
+}
+
+body.dark-mode input::placeholder{
     color:#cbd5e1;
 }
 
-body.dark .btn-secondary{
-    background:#374151;
-    color:white;
+/* Texto */
+
+body.dark-mode .subtitle,
+body.dark-mode .task-counter,
+body.dark-mode .empty p{
+    color:#d1d5db;
 }
 
-body.dark .icon-btn,
-body.dark .hamburger{
+/* Footer */
+
+body.dark-mode .footer{
+    background:#1f2937;
+    color:#fff;
+}
+
+/* Botones generales */
+
+body.dark-mode .icon-btn{
     background:#374151;
-    color:white;
+    color:#fff;
+    border:1px solid #4b5563;
+}
+
+body.dark-mode .filter{
+    background:#374151;
+    color:#fff;
+}
+
+body.dark-mode .filter.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+/* Modal */
+
+body.dark-mode .modal-overlay{
+    background:rgba(0,0,0,.7);
+}
+
+/* ==========================================================
+   TAREAS
+========================================================== */
+
+body.dark-mode .task-item{
+    background:#1e293b;
+    border-color:#334155;
+    box-shadow:0 5px 18px rgba(0,0,0,.2);
+}
+
+body.dark-mode .task-item:hover{
+    border-color:#4f7de8;
+    box-shadow:0 10px 25px rgba(0,0,0,.28);
+}
+
+body.dark-mode .task-title{
+    color:#f8fafc;
+}
+
+body.dark-mode .task-details{
+    color:#cbd5e1;
+}
+
+body.dark-mode .task-date{
+    background:#334155;
+    color:#e2e8f0;
+}
+
+body.dark-mode .task-date.overdue{
+    background:rgba(220,38,38,.2);
+    color:#fca5a5;
+}
+
+/* Botones de tareas */
+
+body.dark-mode .edit-btn{
+    background:rgba(37,99,235,.2);
+    color:#93c5fd;
+}
+
+body.dark-mode .edit-btn:hover{
+    background:rgba(37,99,235,.35);
+}
+
+body.dark-mode .delete-btn{
+    background:rgba(220,38,38,.2);
+    color:#fca5a5;
+}
+
+body.dark-mode .delete-btn:hover{
+    background:rgba(220,38,38,.35);
+}
+
+body.dark-mode .task-item.completed .task-title{
+    color:#94a3b8;
 }
